@@ -21,8 +21,8 @@ $(document).ready(function(){
 
   		//made newTrain variable to push into db
 		var newTrain = {
-		name: trainName,
-		arrival: trainArrival,
+			name: trainName,
+			arrival: trainArrival,
     		destination: trainDestination,
     		firstTrain: trainInitialTime,
     		frequency: trainFrequency
@@ -54,15 +54,13 @@ $(document).ready(function(){
 
     	//appending the table
   		var tr = $("<tr>");
-   	tr.append("<td>" + snapshot.val().trainName + "</td>");
-   	tr.append("<td>" + snapshot.val().trainArrival + "</td>");
-   	tr.append("<td>" + snapshot.val().trainDestination + "</td>");
-   	tr.append("<td>" + snapshot.val().trainFrequency + "</td>");
+   		tr.append("<td>" + snapshot.val().trainName + "</td>");
+   		tr.append("<td>" + snapshot.val().trainArrival + "</td>");
+   		tr.append("<td>" + snapshot.val().trainDestination + "</td>");
+   		tr.append("<td>" + snapshot.val().trainFrequency + "</td>");
     	tr.append("<td>" + nextArrival.format("HH:mm") + "</td>");
     	tr.append("<td>" + minutesAway + "</td>");
     	$("#table-body").append(tr);
-
-
 	});
 
 })
