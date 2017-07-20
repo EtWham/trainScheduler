@@ -39,7 +39,7 @@ $(document).ready(function(){
   		$("#trainFrequency").val("");
 
   	return false;
-	}
+	});
 
 	trainDB.ref().on("child_added", function(snapshot){
 
@@ -63,6 +63,6 @@ $(document).ready(function(){
     	$("#table-body").append(tr);
 
 
-	})
+	});
 
 })
