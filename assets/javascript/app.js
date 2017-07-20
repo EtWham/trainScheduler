@@ -12,6 +12,13 @@ $(document).ready(function(){
 	var trainDB = firebase.database();
 
 	$("#addTrain").on("click", function(event){
+		var trainName "";
+  		var trainArrival = "";
+  		var trainDestination = "";
+  		var trainInitialTime = "";
+  		var trainFrequency = "";
+
+
  		//user input
 		var trainName = $("#trainName").val().trim();
   		var trainArrival = $("#trainArrival").val().trim();
@@ -39,7 +46,6 @@ $(document).ready(function(){
   		$("#trainInitialTime").val("");
   		$("#trainFrequency").val("");
 
-  	return false;
 	});
 
 	trainDB.ref().on("child_added", function(snapshot){
