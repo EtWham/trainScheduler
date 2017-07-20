@@ -22,7 +22,7 @@ $(document).ready(function(){
   		//made newTrain variable to push into db
 		var newTrain = {
 			name: trainName,
-			arrival: trainArrival
+			arrival: trainArrival,
     		destination: trainDestination,
     		firstTrain: trainInitialTime,
     		frequency: trainFrequency
