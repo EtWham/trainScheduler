@@ -1,3 +1,7 @@
 body{
 	background: url("../images/trainBackground.png")
 }
+
+#tableColumns{
+	color: red;
+}
