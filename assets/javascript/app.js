@@ -63,5 +63,5 @@ $(document).ready(function(){
     	$("#table-body").append(tr);
 	});
 
-})
+});
 
