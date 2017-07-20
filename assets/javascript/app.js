@@ -29,6 +29,7 @@ $(document).ready(function(){
   		};
   		//db push
 		trainDB.ref().push(newTrain);
+		console.log(newTrain);
   		alert("Train successfully added");
 
   		//clearing user input values after push to add new trains
