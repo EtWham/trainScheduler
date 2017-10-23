@@ -20,7 +20,7 @@ $(document).ready(function(){
 		var trainName = $("#trainName").val().trim();
   	var trainArrival = $("#trainArrival").val().trim();
   	var trainDestination = $("#trainDestination").val().trim();
-  	var firstTrainTime = $("#trainInitialTime").val().trim();
+    var firstTrainTime = $("#trainInitialTime").val().trim();
   	var trainFrequency = $("#trainFrequency").val().trim();
 
   	//made newTrain variable from user input to push into db
@@ -52,25 +52,29 @@ $(document).ready(function(){
 	});
 
   database.ref().on("child_added", function(snapshot){
-
-    //calculating values to input into the train schedule display
-    var trainFrequency = snapshot.val().Frequency;
-    var firstTrainTime = moment(snapshot.val().trainInitialTime, 'HH:mm');
+    
+    //establishing train info and & time of submission on submission of new train
     var now = moment();
-    var timeDiff = moment().diff(firstTrainTime, "minutes");
-    var remainder = timeDiff % trainFrequency;
-    var minutesAway = trainFrequency - remainder;
-    var nextArrival = moment(now).add(minutesAway, "m");
+    var tName = snapshot.val().name;
+    var tStart = snapshot.val().arrival;
+    var tDestination = snapshot.val().destination;
+    var tFrequency = snapshot.val().frequency;
+    var trainTime = moment(snapshot.val().firstTrain, "HH:mm");
+
+    //calculating train arrival time & minutes away from info provided upon train submission 
+    var timeDiff = moment().diff(trainTime, "minutes");
+    var remainder = timeDiff % tFrequency;
+    var tMinutesAway = tFrequency - remainder;
+    var tArrivalTime = moment(now).add(tMinutesAway, "mm").format("HH:MM");
+
+    console.log(trainTime);
+    console.log(timeDiff);
+    console.log(remainder);
+    console.log(tMinutesAway);
+    console.log(tArrivalTime);
 
     //appending the train schedule display
-    var tr = $("<tr>");
-    tr.append("<td>" + snapshot.val().trainName + "</td>");
-    tr.append("<td>" + snapshot.val().trainArrival + "</td>");
-    tr.append("<td>" + snapshot.val().trainDestination + "</td>");
-    tr.append("<td>" + snapshot.val().trainFrequency + "</td>");
-    tr.append("<td>" + nextArrival.format("HH:mm") + "</td>");
-    tr.append("<td>" + minutesAway + "</td>");
-    $("#table-body").append(tr);
+    $("#trainTable > tbody").append("<tr><td>" + tName + "</td><td>" + tStart + "</td><td>" + tDestination + "</td><td>" + tFrequency + " minutes" + "</td><td>" + tArrivalTime + "</td><td>" + tMinutesAway + "</td></tr>");
   });
 
 });
