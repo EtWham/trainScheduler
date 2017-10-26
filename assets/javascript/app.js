@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-
 	// Initialize Firebase
   var config = {
     apiKey: "AIzaSyCZBK6Tn37omhOPX3FgKbdfQ9Ht1w4iqVk",
@@ -20,7 +19,7 @@ $(document).ready(function(){
 		var trainName = $("#trainName").val().trim();
   	var trainArrival = $("#trainArrival").val().trim();
   	var trainDestination = $("#trainDestination").val().trim();
-    var firstTrainTime = $("#trainInitialTime").val().trim();
+    var firstTrainTime = moment($("#trainInitialTime").val().trim(), "HH:mm").subtract(10, "years").format("X");
   	var trainFrequency = $("#trainFrequency").val().trim();
 
   	//made newTrain variable from user input to push into db
@@ -35,11 +34,6 @@ $(document).ready(function(){
   	//db push
 		database.ref().push(newTrain);
   	alert("Train successfully added");
-    console.log(newTrain.name);
-    console.log(newTrain.arrival);
-    console.log(newTrain.destination);
-    console.log(newTrain.firstTrain);
-    console.log(newTrain.frequency);
 
   	//clearing user input values after push to add new trains
   	$("#trainName").val("");
@@ -48,7 +42,7 @@ $(document).ready(function(){
   	$("#trainInitialTime").val("");
   	$("#trainFrequency").val("");
 
-    return false;
+    // return false;
 	});
 
   database.ref().on("child_added", function(snapshot){
@@ -58,23 +52,33 @@ $(document).ready(function(){
     var tName = snapshot.val().name;
     var tStart = snapshot.val().arrival;
     var tDestination = snapshot.val().destination;
-    var tFrequency = snapshot.val().frequency;
     var trainTime = moment(snapshot.val().firstTrain, "HH:mm");
+    var tFrequency = snapshot.val().frequency;
 
     //calculating train arrival time & minutes away from info provided upon train submission 
-    var timeDiff = moment().diff(trainTime, "minutes");
+    var timeDiff = moment(trainTime).diff(now, "minutes");
+    timeDiff = Math.abs(timeDiff);
     var remainder = timeDiff % tFrequency;
     var tMinutesAway = tFrequency - remainder;
-    var tArrivalTime = moment(now).add(tMinutesAway, "mm").format("HH:MM");
+    //arrival time not working properly for some reason, need to figure this out
+    var tArrivalTime = moment(now).add(tMinutesAway, "mm").format("hh:mm");
+    var tArrivalTime2 = moment(tMinutesAway + now).format("hh:mm A");
 
-    console.log(trainTime);
-    console.log(timeDiff);
-    console.log(remainder);
-    console.log(tMinutesAway);
-    console.log(tArrivalTime);
+
+    //checking all info
+    console.log("This is the train's name: " + tName);
+    console.log("This is WHERE the train starts off: " + tStart);
+    console.log("This is the train's destination: " + tDestination);
+    console.log("This is the time WHEN the train first starts off: " + trainTime);
+    console.log("This is how often the train stops at this station: " + tFrequency + " minutes");
+    console.log("This is the total time since the train first left the station (its first trainTime) and now: " + timeDiff + " minutes");
+    console.log("This is the remainder of the timeDiff or how mant minutes that train is into its specific frequency of visiting our station: " + remainder + " minutes");
+    console.log("This is how many minutes away the train is from arriving at this station: " + tMinutesAway + " minutes");
+    console.log("This is the time right now: "+ now);
+    console.log("This is the time the train will arrive at this station: " + tArrivalTime2);
 
     //appending the train schedule display
-    $("#trainTable > tbody").append("<tr><td>" + tName + "</td><td>" + tStart + "</td><td>" + tDestination + "</td><td>" + tFrequency + " minutes" + "</td><td>" + tArrivalTime + "</td><td>" + tMinutesAway + "</td></tr>");
+    $("#trainTable > tbody").append("<tr><td>" + tName + "</td><td>" + tStart + "</td><td>" + tDestination + "</td><td>" + tFrequency + " minutes" + "</td><td>" + tArrivalTime2 + "</td><td>" + tMinutesAway + "</td></tr>");
   });
 
 });
