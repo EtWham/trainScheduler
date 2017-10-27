@@ -74,7 +74,6 @@ $(document).ready(function(){
     console.log("This is the total time since the train first left the station (its first trainTime) and now: " + timeDiff + " minutes");
     console.log("This is the remainder of the timeDiff or how mant minutes that train is into its specific frequency of visiting our station: " + remainder + " minutes");
     console.log("This is how many minutes away the train is from arriving at this station: " + tMinutesAway + " minutes");
-    console.log("This is the time right now: "+ now);
     console.log("This is the time the train will arrive at this station: " + tArrivalTime);
 
     //appending the train schedule display
