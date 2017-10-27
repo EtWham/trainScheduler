@@ -61,7 +61,7 @@ $(document).ready(function(){
     var remainder = timeDiff % tFrequency;
     var tMinutesAway = tFrequency - remainder;
     //arrival time not working properly for some reason, need to figure this out
-    var tArrivalTime = moment(now).add(tMinutesAway, "mm").format("hh:mm");
+    var tArrivalTime = moment().add(tMinutesAway, "m").format("hh:mm A");
     var tArrivalTime2 = moment(tMinutesAway + now).format("hh:mm A");
 
 
@@ -75,10 +75,10 @@ $(document).ready(function(){
     console.log("This is the remainder of the timeDiff or how mant minutes that train is into its specific frequency of visiting our station: " + remainder + " minutes");
     console.log("This is how many minutes away the train is from arriving at this station: " + tMinutesAway + " minutes");
     console.log("This is the time right now: "+ now);
-    console.log("This is the time the train will arrive at this station: " + tArrivalTime2);
+    console.log("This is the time the train will arrive at this station: " + tArrivalTime);
 
     //appending the train schedule display
-    $("#trainTable > tbody").append("<tr><td>" + tName + "</td><td>" + tStart + "</td><td>" + tDestination + "</td><td>" + tFrequency + " minutes" + "</td><td>" + tArrivalTime2 + "</td><td>" + tMinutesAway + "</td></tr>");
+    $("#trainTable > tbody").append("<tr><td>" + tName + "</td><td>" + tStart + "</td><td>" + tDestination + "</td><td>" + tFrequency + " minutes" + "</td><td>" + tArrivalTime + "</td><td>" + tMinutesAway + "</td></tr>");
   });
 
 });
